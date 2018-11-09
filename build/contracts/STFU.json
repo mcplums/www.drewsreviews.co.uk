@@ -1,0 +1,104 @@
+{
+  "contractName": "STFU",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a72305820ae2983987faf829a868327e51594900094f9d7fa04cf514c8de8b06e76449aa10029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a72305820ae2983987faf829a868327e51594900094f9d7fa04cf514c8de8b06e76449aa10029",
+  "sourceMap": "26:26:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:26:1;;;;;;;",
+  "deployedSourceMap": "26:26:1:-;;;;;",
+  "source": "pragma solidity ^0.4.23;\n\ncontract STFU {\n    \n   \n}\n",
+  "sourcePath": "/Users/mcplums/Documents/Programming/Drew's Reviews/contracts/STFU.sol",
+  "ast": {
+    "absolutePath": "/Users/mcplums/Documents/Programming/Drew's Reviews/contracts/STFU.sol",
+    "exportedSymbols": {
+      "STFU": [
+        59
+      ]
+    },
+    "id": 60,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 58,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".23"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 59,
+        "linearizedBaseContracts": [
+          59
+        ],
+        "name": "STFU",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 60,
+        "src": "26:26:1"
+      }
+    ],
+    "src": "0:53:1"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/mcplums/Documents/Programming/Drew's Reviews/contracts/STFU.sol",
+    "exportedSymbols": {
+      "STFU": [
+        59
+      ]
+    },
+    "id": 60,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 58,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".23"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:1"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 59,
+        "linearizedBaseContracts": [
+          59
+        ],
+        "name": "STFU",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 60,
+        "src": "26:26:1"
+      }
+    ],
+    "src": "0:53:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {
+    "1540219371720": {
+      "events": {},
+      "links": {},
+      "address": "0x5422887c2e339952a44600940aeebe12890bc4f0",
+      "transactionHash": "0x9a9ed527c956a023396a1a6307f98d6d9d3cc68a45a4fe2de613c3a471cad5f6"
+    }
+  },
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2018-10-22T14:51:47.659Z"
+}
