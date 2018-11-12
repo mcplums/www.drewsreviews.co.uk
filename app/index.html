@@ -5,6 +5,9 @@
 <head>
     <meta content="en-gb" http-equiv="Content-Language">
     <title>Drew's Reviews</title>
+
+<!-- <LINK REL=StyleSheet HREF="/stylesheets/app.css" TYPE="text/css" MEDIA=screen> -->
+
      <script src="./app.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style type="text/css">
@@ -30,10 +33,62 @@
   width: 790px;
 }
 
-/* a:visited {
- color:#FFFFFF;
+/*//////////////*/
+
+#reviews {
+	position:relative;
+  width:525px;
+  margin:0 auto;
+
 }
-*/
+
+#review {
+vertical-align:top;
+display: block;
+	height:208px;
+	
+}
+
+#rightside {
+	  display: inline-block;
+	  vertical-align:top;
+}
+
+#poster {
+display: inline;
+vertical-align:top;
+width: 150px;
+}
+
+#title {
+	vertical-align:top;
+  display: block;
+
+margin-left:5px;
+	font-size: 13pt;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #3E4655;
+    font-variant: small-caps;
+}
+
+#reviewtext {
+	margin-left:5px;
+	vertical-align:top;
+  display: inline;
+		font-size: 13pt;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #3E4655;
+}
+
+#score {
+position:absolute;
+    top:0px;
+    left:260px;
+}
+
+
+
+/*//////////////*/
 a {
 	color:white
 }
@@ -137,27 +192,51 @@ a {
 		</tr>
 			</table>'
 
-		
+<!-- This is the bit which we need to loop for the actual reviews-->
+<!-- <div id="table1"></div>
 <table align="center" class="auto-style3" style="width: 525px">		
 			<tr>
 				<td style="width: 70px" rowspan="2">
-				<div id="imagesource"><img height="208" src="'.$row['imagesource'].'" width="143"></div></td>
+				<div id="imagesource"><img height="208" src="https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg"></div></td>
 				<td class="auto-style-filmtitle" style="width: 485px; height: 23px">
-								<span id ="title" class="auto-style-filmtitle" float=left></span><span id="score"></span><b>
+								<span id ="title" class="auto-style-filmtitle" float=left></span>The Matrix<span id="score"></span><b>
 								<a href="choad.php?nosh='.$row['filmname'].'" title="Add a Rube Review" style="float: right; color: #A3A3A3; text-decoration: none;">+</a><br /></b></td>
 			</tr>
 			<tr>
-				<td id ="review" class="auto-style-content" style="height: 172px; width: 485px; vertical-align: top; text-align: justify;">
+				<td id ="review" class="auto-style-content" style="height: 172px; width: 485px; vertical-align: top; text-align: justify;">Pretty op I think
 				</td>
 			</tr>
 </table>
 
-<table align="center" class="auto-style3" style="width: 525px">		  				
+<br><br> -->
+
+<!-- New bit-->
+
+<div id="reviews">
+<!-- <div id="review">
+	 <div id="poster"></div>
+	 <div id="title">The Matrix</div>
+	 <div id="score"></div>
+	 <div id="reviewtext">Fairly good TBH</div>
+</div> -->
+</div>
+
+
+<!-- <div id="reviews">
+<div id="review">
+	 <div id="poster"></div>
+	 <div id="title">The Matrix</div>
+	 <div id="score"><img src="images/3.png"></div>
+	 <div id="reviewtext">Fairly good TBH</div>
+</div>
+</div> -->
+
+<!-- <table align="center" class="auto-style3" style="width: 525px">		  				
 			<tr>
 				<td class="auto-style-content"><a href=index.php?peen=STFU title="Previous" style="color: #CCCCCC; text-decoration: none;">Previous </a>
 			<a href=index.php?peen=STFU title="Next" style="color: #CCCCCC; text-decoration: none;"> Next</a>
 		</tr>
-			</table>
+			</table> -->
 
 		
 		
