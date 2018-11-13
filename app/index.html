@@ -1,88 +1,33 @@
-
-
-
 <html>
 
-
-
 <head>
-    <meta content="en-gb" http-equiv="Content-Language">
-    <title>Drew's Reviews</title>
+	<meta content="en-gb" http-equiv="Content-Language">
+	<title>Drew's Reviews</title>
 
-     <script src="./app.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-      	<script> 
-    $(function(){
-      $("#includedContent").load("header.html"); 
-    });
-    </script> 
-    <style type="text/css">
-    body, html {
-    height:100%;
-    }
-
-    body {
-		margin: 0;
-		padding: 0;
-	}
-
-
-
-
-	
-    </style>
+	<script src="./app.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script> 
+		$(function(){
+			$("#includedContent").load("header.html"); 
+		});
+	</script> 
 </head>
+
 <body>
-
-<div id="includedContent"></div>
-
-  	   
-	<p class="auto-style-content" style="height: 17px; vertical-align: top">By default, reviews are listed by review date and not release date. Films are rated 
-	up to <img src="images/4.png" >.</p><br>
-		
-		<table align="center" class="auto-style3" style="width: 525px">		  				
+	<div id="includedContent"></div>
+	<p class="auto-style-content" style="height: 17px; vertical-align: top">By default, reviews are listed by review date and not release date. Films are rated up to <img src="images/4.png" >.</p><br>
+	
+		<table align="center" class="auto-style3" style="width: 525px">		  	
 			<tr>
 				<td class="auto-style-content">
-		<a href=index.php?peen= title="Previous" style="color: #CCCCCC; text-decoration: none;">Previous </a>
-			Showing reviews 1 to 2 of 3
-		<a href=index.php?peen='.$rubes.'&startfrom='.$startfromplustwenty.' title="Next" style="color: #CCCCCC; text-decoration: none;"> Next</a>
-		</tr>
+					<a href=index.php?peen= title="Previous" style="color: #CCCCCC; text-decoration: none;">Previous </a>
+					Showing reviews 1 to 2 of 3
+					<a href=index.php?peen='.$rubes.'&startfrom='.$startfromplustwenty.' title="Next" style="color: #CCCCCC; text-decoration: none;"> Next</a>
+				</tr>
 			</table>'
+			<div id="reviews">
+			</div>
 
-
-<!-- New bit-->
-
-<div id="reviews">
-<!-- <div id="review">
-	 <div id="poster"></div>
-	 <div id="title">The Matrix</div>
-	 <div id="score"></div>
-	 <div id="reviewtext">Fairly good TBH</div>
-</div> -->
-</div>
-
-
-<!-- <div id="reviews">
-<div id="review">
-	 <div id="poster"></div>
-	 <div id="title">The Matrix</div>
-	 <div id="score"><img src="images/3.png"></div>
-	 <div id="reviewtext">Fairly good TBH</div>
-</div>
-</div> -->
-
-<!-- <table align="center" class="auto-style3" style="width: 525px">		  				
-			<tr>
-				<td class="auto-style-content"><a href=index.php?peen=STFU title="Previous" style="color: #CCCCCC; text-decoration: none;">Previous </a>
-			<a href=index.php?peen=STFU title="Next" style="color: #CCCCCC; text-decoration: none;"> Next</a>
-		</tr>
-			</table> -->
-
-		
-		
-		
-		</div>
-
-
-						</body>
-</html>
+	</body>
+	
+	</html>
