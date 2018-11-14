@@ -6,10 +6,9 @@ contract DrewsReviews {
     uint public userReviewIndex;
     
     mapping (uint => Review) reviewList;
-    mapping (uint =>  mapping(uint => Review)) userReviewList;
+    mapping (uint => userReview) userReviewList;
 
 	struct Review {
-		uint id;
 		string name;
 		string review;
 		uint reviewDate;
@@ -18,7 +17,7 @@ contract DrewsReviews {
 	}
 
 	struct userReview {
-		uint id;
+		uint filmId;
 		string userName;
 		string review;
 		uint score;
@@ -32,22 +31,27 @@ constructor () public {
 function addReview(string _name, string _review, uint _reviewdate, uint _score, string _imageSource) public {
     reviewIndex += 1;
     
-    Review memory review = Review (reviewIndex, _name, _review, _reviewdate, _score, _imageSource );
+    Review memory review = Review (_name, _review, _reviewdate, _score, _imageSource );
     reviewList[reviewIndex] = review;
     
 }
 
-function addUserReview(uint _id, string _username, string _review, uint _score) public {
+function addUserReview(uint _filmId, string _username, string _review, uint _score) public {
     userReviewIndex += 1;
     
-    userReview memory _userReview = userReview (userReviewIndex, _username, _review, _score);
-    userReviewList[_id][userReviewIndex] = _userReview;
+    userReview memory _userReview = userReview (_filmId, _username, _review, _score);
+    userReviewList[userReviewIndex] = _userReview;
     
 }
 
-function getReview(uint _id) view public returns (string, string, uint, uint, string) {
-	Review memory review = reviewList[_id];
+function getReview(uint _filmId) view public returns (string, string, uint, uint, string) {
+	Review memory review = reviewList[_filmId];
 	return (review.name, review.review, review.reviewDate, review.score, review.imageSource);
+}
+
+function getUserReview(uint _userReviewId) view public returns (uint, string, string, uint) {
+	userReview memory _userReview = userReviewList[_userReviewId];
+	return (_userReview.filmId, _userReview.userName, _userReview.review, _userReview.score);
 }
 
 }
