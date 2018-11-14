@@ -3,22 +3,27 @@
 <head>
 	<meta content="en-gb" http-equiv="Content-Language">
 	<title>Drew's Reviews</title>
-   <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
-	<script src="./app.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script> 
-		$(function(){
-			$("#headerBanner").load("header.html"); 
-		});
-	</script> 
+ <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+ <script src="./app.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script> 
+  $(function(){
+   $("#headerBanner").load("header.html"); 
+ });
+</script> 
 </head>
 
 <body>
 	<div id="headerBanner"></div>
 	<br><br>
-    <div class="row" id="user-reviews"><div id="reviews">
-      </div></div>
-   <form class="form-horizontal col-sm-5" id="add-user-review">
+
+
+
+  <div class="row" id="user-reviews"><div id="reviews">
+    <div id="userreviews">
+  </div>
+  </div></div>
+  <form class="form-horizontal col-sm-5" id="add-user-review">
     <div class="form-group">
      <label for="film-name" class="col-sm-2 control-label">Your Name</label>
      <div class="col-sm-10">
@@ -56,11 +61,9 @@
 </div>
 </div>
 </form>
-<div id="reviews">
-      </div>
-<div id="userreviews">
-      </div>
 
-	</body>
-	
-	</html>
+
+
+</body>
+
+</html>
