@@ -28,12 +28,14 @@ constructor () public {
     userReviewIndex = 0;
 }
 
+event newReview(uint _filmId, string _name, string _review, string _imageSource, uint _score);
+
 function addReview(string _name, string _review, uint _reviewdate, uint _score, string _imageSource) public {
     reviewIndex += 1;
     
     Review memory review = Review (_name, _review, _reviewdate, _score, _imageSource );
     reviewList[reviewIndex] = review;
-    
+    emit newReview(reviewIndex, _name, _review, _imageSource, _score);
 }
 
 function addUserReview(uint _filmId, string _username, string _review, uint _score) public {
