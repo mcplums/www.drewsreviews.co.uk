@@ -30,6 +30,8 @@ constructor () public {
 
 event newReview(uint _filmId, string _name, string _review, string _imageSource, uint _score);
 
+event newUserReview(uint _filmId, uint _userReviewId, string _userName, string _review, uint _score);
+
 function addReview(string _name, string _review, uint _reviewdate, uint _score, string _imageSource) public {
     reviewIndex += 1;
     
@@ -43,7 +45,7 @@ function addUserReview(uint _filmId, string _username, string _review, uint _sco
     
     userReview memory _userReview = userReview (_filmId, _username, _review, _score);
     userReviewList[userReviewIndex] = _userReview;
-    
+    emit newUserReview(_filmId, userReviewIndex, _username, _review, _score);
 }
 
 function getReview(uint _filmId) view public returns (string, string, uint, uint, string) {

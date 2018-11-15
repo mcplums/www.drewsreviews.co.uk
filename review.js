@@ -12,6 +12,16 @@ var ReviewSchema = new Schema({
  posterSource: String, 
 });
 
+/*var userReviewSchema = new Schema({
+ filmId: Number,
+ userReviewId: Number,
+ userName: String,
+ reviewText: String,
+ score: Number,
+});*/
+
 var ReviewModel = mongoose.model('ReviewModel', ReviewSchema);
+/*var userReviewModel = mongoose.model('userReviewModel', userReviewSchema);*/
 
 module.exports = ReviewModel;
+/*module.exports = userReviewModel;*/

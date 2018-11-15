@@ -15,8 +15,10 @@ app.use(function(req, res, next) {
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
+
 var ReviewModel = require('./review');
 mongoose.connect("mongodb://localhost:27017/drews_reviews");
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
@@ -29,6 +31,48 @@ app.get('/', function(req, res) {
 });
 
 setupReviewEventListener();
+
+setupUserReviewEventListener();
+
+function  setupUserReviewEventListener() {
+  var userReviewEvent;
+  DrewsReviews.deployed().then(function(i) {
+    userReviewEvent = i.newUserReview({fromBlock: 0, toBlock: 'latest'})
+    userReviewEvent.watch(function(err, result) {
+      if (err) {
+        console.log(err)
+        return;
+      }
+      console.log(result.args);
+      saveUserReview(result.args);
+    });
+  });
+}
+
+function saveUserReview(review) {
+  //ProductModel is the scheme, as defined by product.js (which is required for this file, above) it searches the database for the id,it should return null
+  userReviewModel.findOne({ 'userReviewId': review._ReviewId.toNumber() }, function (err, dbProduct) {
+    //this is a strange way of doing if else, you just put a return in the if, then you don't need to bother with the else
+    if (dbProduct != null) {
+      return;
+    }
+
+    var p = new userReviewModel({filmId: review._filmId, userReviewId: review._userReviewId, userName: review._userName, reviewText: review._review, score: review._score
+    });
+
+    //p.save is the magic here,the poduct as defined above is added to mongodb
+    p.save(function(error) {
+      if (error) {
+        console.log(error);
+      } else {
+        //ProductModel.count gets the total number of products in the database
+        userReviewModel.count({}, function(err, count) {
+         console.log("count is " + count);
+       });
+      }
+    });
+  })
+}
 
 function  setupReviewEventListener() {
 	var reviewEvent;
@@ -80,6 +124,19 @@ app.get('/reviews', function(req, res) {
  }
 
   ReviewModel.find(query, null, {sort: 'blockchainId'}, function(err, items) {
+    console.log(items.length);
+    res.send(items);
+  });
+});
+
+app.get('/userreviews', function(req, res) {
+
+ var query = {};
+ if (req.query.filmId !== undefined) {
+  query['filmId'] = {$eq: req.query.filmId};
+ }
+
+  userReviewModel.find(query, null, {sort: 'userReviewId'}, function(err, items) {
     console.log(items.length);
     res.send(items);
   });
