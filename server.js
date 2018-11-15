@@ -73,7 +73,13 @@ function saveReview(review) {
 
 //This is the bit that allows the front end to call the database. It is largely copy and pasted from zastrin. 
 app.get('/reviews', function(req, res) {
-  ReviewModel.find({}, null, {sort: 'blockchainId'}, function(err, items) {
+
+ var query = {};
+ if (req.query.blockchainId !== undefined) {
+  query['blockchainId'] = {$eq: req.query.blockchainId};
+ }
+
+  ReviewModel.find(query, null, {sort: 'blockchainId'}, function(err, items) {
     console.log(items.length);
     res.send(items);
   });

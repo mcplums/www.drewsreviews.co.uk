@@ -94,7 +94,6 @@ function renderReviews() {
       let chunks = data.splice(0, 4);
       chunks.forEach(function(review)
       {
-        console.log(review);
         let node = $("<div id='review'>");
         node.append("<div id='poster'><img style='width:150px' src=" + review.posterSource + "></div>");
         node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
@@ -105,19 +104,38 @@ function renderReviews() {
   });
 }
 
-
-function renderSingleReview(id) {
+//old version
+/*function renderSingleReview(id) {
   DrewsReviews.deployed().then(function(f) {
     f.getReview.call(id).then(function(q) {
+      console.log(q);
       let node = $("<div id='review'>");
       node.append("<div id='poster'><img style='width:150px' src=" + q[4] + "></div>");
       node.append("<div id='rightside'><span id='title'>" + q[0] + "<img src='images/" + q[3].toNumber() + ".png'/></span><span id='reviewtext'>" + q[1] + "</span></div>");
       $("#reviews").append(node);
     });
   });
+}*/
+
+function renderSingleReview(id) {
+  $.ajax({
+    url: "http://localhost:3000/reviews",
+    type: 'get',
+    contentType: "application/json; charset=utf-8",
+    data: {blockchainId: id}
+  }).done(function(data) {
+    while(data.length > 0) {
+      let chunks = data.splice(0, 4);
+      chunks.forEach(function(review)
+      {
+      let node = $("<div id='review'>");
+        node.append("<div id='poster'><img style='width:150px' src=" + review.posterSource + "></div>");
+        node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
+        $("#reviews").append(node);
+    });
+  }
+});
 }
-
-
 
 
 function renderUserReviews(id) {
