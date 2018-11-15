@@ -31,12 +31,12 @@ window.App = {
             console.log("STFU");
             renderSingleReview(filmId);
             renderUserReviews(filmId);
-        } else {
+          } else {
             renderReviews();
-        }
+          }
 
 
-    $("#add-review").submit(function(event) {
+          $("#add-review").submit(function(event) {
             //Below gets the info that is submitted by the form, into the variable req
             const req = $("#add-review").serialize();
             //below cleans it up, i dont understand the details but it gets it into a readable state
@@ -49,7 +49,7 @@ window.App = {
             addReview(decodedParams);
           });
 
-    $("#add-user-review").submit(function(event) {
+          $("#add-user-review").submit(function(event) {
             //Below gets the info that is submitted by the form, into the variable req
             const req = $("#add-user-review").serialize();
             //below cleans it up, i dont understand the details but it gets it into a readable state
@@ -61,10 +61,11 @@ window.App = {
             event.preventDefault();
             addUserReview(decodedParams);
           });
-  }
-};
+        }
+      };
 
-function renderReviews() {
+//below is the old version where it reads straight from the blockchain and not mongo
+/*function renderReviews() {
   DrewsReviews.deployed().then(function(f) {
     f.reviewIndex.call().then(function(p) {
       var count;
@@ -72,9 +73,6 @@ function renderReviews() {
       for (var i = 1; i <= count; i++) {
         f.getReview.call(i).then(function(q)
         {
-          console.log(q[3]);
-          console.log(q[3].toNumber());
-          console.log(q[3].toString());
           let node = $("<div id='review'>");
           node.append("<div id='poster'><img style='width:150px' src=" + q[4] + "></div>");
           node.append("<div id='rightside'><span id='title'>" + q[0] + "<img src='images/" + q[3].toNumber() + ".png'/></span><span id='reviewtext'>" + q[1] + "</span></div>");
@@ -83,18 +81,44 @@ function renderReviews() {
       }
     });
   });
+}*/
+
+function renderReviews() {
+  $.ajax({
+    url: "http://localhost:3000/reviews",
+    type: 'get',
+    contentType: "application/json; charset=utf-8",
+    data: {}
+  }).done(function(data) {
+    while(data.length > 0) {
+      let chunks = data.splice(0, 4);
+      chunks.forEach(function(review)
+      {
+        console.log(review);
+        let node = $("<div id='review'>");
+        node.append("<div id='poster'><img style='width:150px' src=" + review.posterSource + "></div>");
+        node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
+        $("#reviews").append(node);
+      });
+
+    }
+  });
 }
 
+
 function renderSingleReview(id) {
-    DrewsReviews.deployed().then(function(f) {
-      f.getReview.call(id).then(function(q) {
-        let node = $("<div id='review'>");
-          node.append("<div id='poster'><img style='width:150px' src=" + q[4] + "></div>");
-          node.append("<div id='rightside'><span id='title'>" + q[0] + "<img src='images/" + q[3].toNumber() + ".png'/></span><span id='reviewtext'>" + q[1] + "</span></div>");
-          $("#reviews").append(node);
-      });
+  DrewsReviews.deployed().then(function(f) {
+    f.getReview.call(id).then(function(q) {
+      let node = $("<div id='review'>");
+      node.append("<div id='poster'><img style='width:150px' src=" + q[4] + "></div>");
+      node.append("<div id='rightside'><span id='title'>" + q[0] + "<img src='images/" + q[3].toNumber() + ".png'/></span><span id='reviewtext'>" + q[1] + "</span></div>");
+      $("#reviews").append(node);
     });
+  });
 }
+
+
+
 
 function renderUserReviews(id) {
   DrewsReviews.deployed().then(function(f) {
@@ -106,9 +130,9 @@ function renderUserReviews(id) {
         {
           if (q[0] == id)
           {
-          let node = $("<div id='user-review'>");
-          node.append("Name:" + q[1] + ". Review: " + q[2] + "<img src='images/" + q[3].toNumber() + ".png'/>");
-          $("#user-reviews").append(node);
+            let node = $("<div id='user-review'>");
+            node.append("Name:" + q[1] + ". Review: " + q[2] + "<img src='images/" + q[3].toNumber() + ".png'/>");
+            $("#user-reviews").append(node);
           }
           else {
             console.log("A userview has been not printed");
@@ -120,42 +144,42 @@ function renderUserReviews(id) {
 }
 
 function addReview(review) {
-    try {
-                var ts = Math.round((new Date()).getTime() / 1000);
-                DrewsReviews.deployed().then(function(f) {
-                    return f.addReview(review["film-name"], review["review-text"], ts, review["film-score"], review["poster-source"], {
-                        from: web3.eth.accounts[0],
-                        gas: 4700000
-                    });
-                }).then(function(f) {
-                    alert("Review added");
-                });
-            }
-        
+  try {
+    var ts = Math.round((new Date()).getTime() / 1000);
+    DrewsReviews.deployed().then(function(f) {
+      return f.addReview(review["film-name"], review["review-text"], ts, review["film-score"], review["poster-source"], {
+        from: web3.eth.accounts[0],
+        gas: 4700000
+      });
+    }).then(function(f) {
+      alert("Review added");
+    });
+  }
 
-     catch (error) {
-        console.error(error);
-    }
+
+  catch (error) {
+    console.error(error);
+  }
 }
 
 function addUserReview(review) {
-    try {
-                var ts = Math.round((new Date()).getTime() / 1000);
-                let filmId = new URLSearchParams(window.location.search).get('id');
-                DrewsReviews.deployed().then(function(f) {
-                    return f.addUserReview(filmId,review["user-name"], review["review-text"], review["film-score"], {
-                        from: web3.eth.accounts[0],
-                        gas: 4700000
-                    });
-                }).then(function(f) {
-                    alert("Review added");
-                });
-            }
-        
+  try {
+    var ts = Math.round((new Date()).getTime() / 1000);
+    let filmId = new URLSearchParams(window.location.search).get('id');
+    DrewsReviews.deployed().then(function(f) {
+      return f.addUserReview(filmId,review["user-name"], review["review-text"], review["film-score"], {
+        from: web3.eth.accounts[0],
+        gas: 4700000
+      });
+    }).then(function(f) {
+      alert("Review added");
+    });
+  }
 
-     catch (error) {
-        console.error(error);
-    }
+
+  catch (error) {
+    console.error(error);
+  }
 }
 
 window.addEventListener('load', function() {

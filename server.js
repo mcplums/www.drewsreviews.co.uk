@@ -7,6 +7,12 @@ DrewsReviews.setProvider(provider);
 var express = require('express');
 var app = express();
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 var ReviewModel = require('./review');
@@ -48,8 +54,8 @@ function saveReview(review) {
     }
 
     var p = new ReviewModel({name: review._name, blockchainId: review._filmId,
-      reviewText: review._review, score: review._score, posterSource: review.imageSource
-     });
+      reviewText: review._review, score: review._score, posterSource: review._imageSource
+    });
 
     //p.save is the magic here,the poduct as defined above is added to mongodb
     p.save(function(error) {
@@ -59,8 +65,16 @@ function saveReview(review) {
       	//ProductModel.count gets the total number of products in the database
         ReviewModel.count({}, function(err, count) {
          console.log("count is " + count);
-        });
+       });
       }
     });
   })
 }
+
+//This is the bit that allows the front end to call the database. It is largely copy and pasted from zastrin. 
+app.get('/reviews', function(req, res) {
+  ReviewModel.find({}, null, {sort: 'blockchainId'}, function(err, items) {
+    console.log(items.length);
+    res.send(items);
+  });
+});
