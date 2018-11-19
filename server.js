@@ -16,7 +16,7 @@ app.use(function(req, res, next) {
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-var ReviewModel = require('./review');
+var collections = require('./review');
 mongoose.connect("mongodb://localhost:27017/drews_reviews");
 
 var db = mongoose.connection;
@@ -91,13 +91,13 @@ function  setupReviewEventListener() {
 
 function saveReview(review) {
 	//ProductModel is the scheme, as defined by product.js (which is required for this file, above) it searches the database for the id,it should return null
-  ReviewModel.findOne({ 'blockchainId': review._filmId.toNumber() }, function (err, dbProduct) {
+  collections.ReviewModel.findOne({ 'blockchainId': review._filmId.toNumber() }, function (err, dbProduct) {
   	//this is a strange way of doing if else, you just put a return in the if, then you don't need to bother with the else
     if (dbProduct != null) {
       return;
     }
 
-    var p = new ReviewModel({name: review._name, blockchainId: review._filmId,
+    var p = new collections.ReviewModel({name: review._name, blockchainId: review._filmId,
       reviewText: review._review, score: review._score, posterSource: review._imageSource
     });
 
@@ -107,7 +107,7 @@ function saveReview(review) {
         console.log(error);
       } else {
       	//ProductModel.count gets the total number of products in the database
-        ReviewModel.count({}, function(err, count) {
+        collections.ReviewModel.count({}, function(err, count) {
          console.log("count is " + count);
        });
       }
@@ -123,7 +123,7 @@ app.get('/reviews', function(req, res) {
   query['blockchainId'] = {$eq: req.query.blockchainId};
  }
 
-  ReviewModel.find(query, null, {sort: 'blockchainId'}, function(err, items) {
+  collections.ReviewModel.find(query, null, {sort: 'blockchainId'}, function(err, items) {
     console.log(items.length);
     res.send(items);
   });
