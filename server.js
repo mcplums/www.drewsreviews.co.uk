@@ -51,13 +51,13 @@ function  setupUserReviewEventListener() {
 
 function saveUserReview(review) {
   //ProductModel is the scheme, as defined by product.js (which is required for this file, above) it searches the database for the id,it should return null
-  userReviewModel.findOne({ 'userReviewId': review._ReviewId.toNumber() }, function (err, dbProduct) {
+  collections.userReviewModel.findOne({ 'userReviewId': review._userReviewId.toNumber() }, function (err, dbProduct) {
     //this is a strange way of doing if else, you just put a return in the if, then you don't need to bother with the else
     if (dbProduct != null) {
       return;
     }
 
-    var p = new userReviewModel({filmId: review._filmId, userReviewId: review._userReviewId, userName: review._userName, reviewText: review._review, score: review._score
+    var p = new collections.userReviewModel({filmId: review._filmId, userReviewId: review._userReviewId, userName: review._userName, reviewText: review._review, score: review._score
     });
 
     //p.save is the magic here,the poduct as defined above is added to mongodb
@@ -66,8 +66,8 @@ function saveUserReview(review) {
         console.log(error);
       } else {
         //ProductModel.count gets the total number of products in the database
-        userReviewModel.count({}, function(err, count) {
-         console.log("count is " + count);
+        collections.userReviewModel.count({}, function(err, count) {
+         console.log("User Review count is " + count);
        });
       }
     });
@@ -108,7 +108,7 @@ function saveReview(review) {
       } else {
       	//ProductModel.count gets the total number of products in the database
         collections.ReviewModel.count({}, function(err, count) {
-         console.log("count is " + count);
+         console.log("Main Review count is " + count);
        });
       }
     });
@@ -136,7 +136,7 @@ app.get('/userreviews', function(req, res) {
   query['filmId'] = {$eq: req.query.filmId};
  }
 
-  userReviewModel.find(query, null, {sort: 'userReviewId'}, function(err, items) {
+  collections.userReviewModel.find(query, null, {sort: 'userReviewId'}, function(err, items) {
     console.log(items.length);
     res.send(items);
   });

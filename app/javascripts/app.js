@@ -137,8 +137,34 @@ function renderSingleReview(id) {
 });
 }
 
-
 function renderUserReviews(id) {
+  $.ajax({
+    url: "http://localhost:3000/userreviews",
+    type: 'get',
+    contentType: "application/json; charset=utf-8",
+    data: {blockchainId: id}
+  }).done(function(data) {
+    while(data.length > 0) {
+      let chunks = data.splice(0, 4);
+      chunks.forEach(function(review)
+        {
+          if (review.filmId == id)
+          {
+            let node = $("<div id='user-review'>");
+            node.append("Name:" + review.userName + ". Review: " + review.reviewText + "<img src='images/" + review.score + ".png'/>");
+            $("#user-reviews").append(node);
+          }
+          else {
+            console.log("A userview has been not printed");
+          }
+        });
+      }
+    });
+  }
+
+
+//old version
+/*function renderUserReviews(id) {
   DrewsReviews.deployed().then(function(f) {
     f.userReviewIndex.call().then(function(p) {
       var count;
@@ -159,7 +185,7 @@ function renderUserReviews(id) {
       }
     });
   });
-}
+}*/
 
 function addReview(review) {
   try {
