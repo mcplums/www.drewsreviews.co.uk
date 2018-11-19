@@ -151,7 +151,7 @@ function renderUserReviews(id) {
           if (review.filmId == id)
           {
             let node = $("<div id='user-review'>");
-            node.append("Name:" + review.userName + ". Review: " + review.reviewText + "<img src='images/" + review.score + ".png'/>");
+            node.append("Name: " + review.userName + ". Review: " + review.reviewText + "<img src='images/" + review.score + ".png'/>");
             $("#user-reviews").append(node);
           }
           else {
@@ -216,7 +216,7 @@ function addUserReview(review) {
         gas: 4700000
       });
     }).then(function(f) {
-      alert("Review added");
+      alert("User review added. Refresh the page after the transaction is confirmed to see your review");
     });
   }
 

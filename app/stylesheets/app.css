@@ -13,7 +13,7 @@
 
 /*//////////////*/
 
-#reviews {
+#add-user-review {
   position:relative;
   width:525px;
   margin:0 auto;
@@ -25,6 +25,32 @@
   width:525px;
   margin:0 auto;
 
+}
+
+
+#reviews {
+  position:relative;
+  width:525px;
+  margin:0 auto;
+  
+}
+
+#genericmid {
+  position:relative;
+  width:525px;
+  margin:0 auto;
+  
+}
+
+#myextra {
+  width:200px;
+}
+
+#userreviewform {
+  position:relative;
+  width:740px;
+  margin:0 auto;
+  
 }
 
 #review {
