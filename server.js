@@ -50,9 +50,18 @@ function  setupUserReviewEventListener() {
 }
 
 function saveUserReview(review) {
-  //ProductModel is the scheme, as defined by product.js (which is required for this file, above) it searches the database for the id,it should return null
-  collections.userReviewModel.findOne({ 'userReviewId': review._userReviewId.toNumber() }, function (err, dbProduct) {
-    //this is a strange way of doing if else, you just put a return in the if, then you don't need to bother with the else
+
+  collections.ReviewModel.updateOne(
+    { 'blockchainId': review._userReviewId.toNumber() }, 
+    {
+      $set: { "userReviewCount": "1"}
+    }
+    )
+
+  collections.userReviewModel.findOne({ 'userReviewId': review._filmId.toNumber() }, function (err, dbProduct) {
+
+
+
     if (dbProduct != null) {
       return;
     }
@@ -60,12 +69,10 @@ function saveUserReview(review) {
     var p = new collections.userReviewModel({filmId: review._filmId, userReviewId: review._userReviewId, userName: review._userName, reviewText: review._review, score: review._score
     });
 
-    //p.save is the magic here,the poduct as defined above is added to mongodb
     p.save(function(error) {
       if (error) {
         console.log(error);
       } else {
-        //ProductModel.count gets the total number of products in the database
         collections.userReviewModel.count({}, function(err, count) {
          console.log("User Review count is " + count);
        });
@@ -98,7 +105,7 @@ function saveReview(review) {
     }
 
     var p = new collections.ReviewModel({name: review._name, blockchainId: review._filmId,
-      reviewText: review._review, score: review._score, posterSource: review._imageSource
+      reviewText: review._review, score: review._score, posterSource: review._imageSource, userReviewCount: 0
     });
 
     //p.save is the magic here,the poduct as defined above is added to mongodb

@@ -95,8 +95,10 @@ function renderReviews() {
       chunks.forEach(function(review)
       {
         let node = $("<div id='review'>");
-        node.append("<div id='poster'><img style='width:150px' src=" + review.posterSource + "></div>");
-        node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
+        node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img style='width:150px' src=" + review.posterSource + "></a></div>");
+        node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><a hreh='asdf' style='color:#3E4655'>asdfasdfa</a></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
+        /*node.append("<a href='stfu'>Add User Review</a>");*/
+        /*node.append("<span id='reviewtext'>" + review.reviewText + "</span></div>")*/;
         $("#reviews").append(node);
       });
 
@@ -138,6 +140,7 @@ function renderSingleReview(id) {
 }
 
 function renderUserReviews(id) {
+  var reviewfound=0;
   $.ajax({
     url: "http://localhost:3000/userreviews",
     type: 'get',
@@ -150,6 +153,7 @@ function renderUserReviews(id) {
         {
           if (review.filmId == id)
           {
+            reviewfound=1;
             let node = $("<div id='user-review'>");
             node.append("Name: " + review.userName + ". Review: " + review.reviewText + "<img src='images/" + review.score + ".png'/>");
             $("#user-reviews").append(node);
@@ -157,8 +161,15 @@ function renderUserReviews(id) {
           else {
             console.log("A userview has been not printed");
           }
+          
         });
+
       }
+      if (reviewfound == 0) {
+            let node = $("<div id='user-review'>");
+            node.append("[no user reviews]");
+            $("#user-reviews").append(node);
+          }
     });
   }
 

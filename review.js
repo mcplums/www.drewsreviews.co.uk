@@ -10,6 +10,7 @@ var ReviewSchema = new Schema({
  reviewText: String,
  score: Number,
  posterSource: String, 
+ userReviewCount: Number,
 });
 
 var userReviewSchema = new Schema({
@@ -28,5 +29,3 @@ module.exports =
  ReviewModel: ReviewModel,
  userReviewModel: userReviewModel
 };
-
-/*module.exports = ReviewModel;*/
