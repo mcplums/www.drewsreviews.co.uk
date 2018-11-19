@@ -36,6 +36,10 @@
     "ipfs-api": "18.1.1",
     "mongoose": "4.11.7",
     "express": "4.15.4",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "macaddress": ">=0.2.9",
+    "url-parse": ">=1.4.3",
+    "fresh": ">=0.5.2",
+    "mime": ">=1.4.1"
   }
 }
