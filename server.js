@@ -6,6 +6,7 @@ var DrewsReviews = contract(drewsreviews_artifacts);
 DrewsReviews.setProvider(provider);
 var express = require('express');
 var app = express();
+var currentCount =4;
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -51,19 +52,40 @@ function  setupUserReviewEventListener() {
 
 function saveUserReview(review) {
 
-/*  var myquery = { }*/
 
-  collections.ReviewModel.updateOne(
+
+
+/*    collections.ReviewModel.find(
+    { 'blockchainId': review._filmId.toNumber() },
+    { projection: { userReviewCount: 1 } } ).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    });*/
+
+    //Get current userReviewCount
+    collections.ReviewModel.findOne(
     { 'blockchainId': review._filmId.toNumber() }, 
-    { $set: { "userReviewCount": "1"} }, 
+    function(err, result) {
+    if (err) throw err;
+    console.log("Original userReviewCount is" + result.userReviewCount);
+    currentCount = result.userReviewCount;
+    currentCount++;
+    });
+
+    console.log("Before:" + currentCount);
+    currentCount++;
+    console.log("After:" + currentCount);
+
+    //Add back to db
+   collections.ReviewModel.updateOne(
+    { 'blockchainId': review._filmId.toNumber() }, 
+    { $set: { "userReviewCount": currentCount} }, 
     function(err, res) {
     if (err) throw err;
-    console.log("1 document updated");
+    console.log("Updated userReviewCount is" + currentCount);
     });
 
   collections.userReviewModel.findOne({ 'userReviewId': review._filmId.toNumber() }, function (err, dbProduct) {
-
-
 
     if (dbProduct != null) {
       return;
@@ -77,7 +99,7 @@ function saveUserReview(review) {
         console.log(error);
       } else {
         collections.userReviewModel.count({}, function(err, count) {
-         console.log("User Review count is " + count);
+         /*console.log("User Review count is " + count);*/
        });
       }
     });
@@ -134,7 +156,7 @@ app.get('/reviews', function(req, res) {
  }
 
   collections.ReviewModel.find(query, null, {sort: 'blockchainId'}, function(err, items) {
-    console.log(items.length);
+    /*console.log(items.length);*/
     res.send(items);
   });
 });
@@ -147,7 +169,7 @@ app.get('/userreviews', function(req, res) {
  }
 
   collections.userReviewModel.find(query, null, {sort: 'userReviewId'}, function(err, items) {
-    console.log(items.length);
+    /*console.log(items.length);*/
     res.send(items);
   });
 });
