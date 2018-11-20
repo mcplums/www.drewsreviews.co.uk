@@ -51,12 +51,15 @@ function  setupUserReviewEventListener() {
 
 function saveUserReview(review) {
 
+/*  var myquery = { }*/
+
   collections.ReviewModel.updateOne(
-    { 'blockchainId': review._userReviewId.toNumber() }, 
-    {
-      $set: { "userReviewCount": "1"}
-    }
-    )
+    { 'blockchainId': review._filmId.toNumber() }, 
+    { $set: { "userReviewCount": "1"} }, 
+    function(err, res) {
+    if (err) throw err;
+    console.log("1 document updated");
+    });
 
   collections.userReviewModel.findOne({ 'userReviewId': review._filmId.toNumber() }, function (err, dbProduct) {
 
