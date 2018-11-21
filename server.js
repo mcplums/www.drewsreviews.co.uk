@@ -6,7 +6,8 @@ var DrewsReviews = contract(drewsreviews_artifacts);
 DrewsReviews.setProvider(provider);
 var express = require('express');
 var app = express();
-var currentCount =4;
+var currentCount =0;
+
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -52,58 +53,48 @@ function  setupUserReviewEventListener() {
 
 function saveUserReview(review) {
 
-
-
-
-/*    collections.ReviewModel.find(
-    { 'blockchainId': review._filmId.toNumber() },
-    { projection: { userReviewCount: 1 } } ).toArray(function(err, result) {
-    if (err) throw err;
-    console.log(result);
-    });*/
-
     //Get current userReviewCount
     collections.ReviewModel.findOne(
-    { 'blockchainId': review._filmId.toNumber() }, 
-    function(err, result) {
-    if (err) throw err;
-    console.log("Original userReviewCount is" + result.userReviewCount);
-    currentCount = result.userReviewCount;
+    	{ 'blockchainId': review._filmId.toNumber() }, 
+    	function(err, result) {
+    		if (err) throw err;
+    		console.log("Original userReviewCount is" + result.userReviewCount);
+    		currentCount = result.userReviewCount;
+    		currentCount++;
+    	});
+
     currentCount++;
-    });
 
-    console.log("Before:" + currentCount);
-    currentCount++;
-    console.log("After:" + currentCount);
+    //Add current userReviewCountback to db
+    collections.ReviewModel.updateOne(
+    	{ 'blockchainId': review._filmId.toNumber() }, 
+    	{ $set: { "userReviewCount": currentCount} }, 
+    	function(err, res) {
+    		if (err) throw err;
+    		console.log("Updated userReviewCount is" + currentCount);
+    	});
 
-    //Add back to db
-   collections.ReviewModel.updateOne(
-    { 'blockchainId': review._filmId.toNumber() }, 
-    { $set: { "userReviewCount": currentCount} }, 
-    function(err, res) {
-    if (err) throw err;
-    console.log("Updated userReviewCount is" + currentCount);
-    });
+    //Add actual userreview to thing
+    collections.userReviewModel.findOne({ 'userReviewId': review._filmId.toNumber() }, function (err, dbProduct) {
 
-  collections.userReviewModel.findOne({ 'userReviewId': review._filmId.toNumber() }, function (err, dbProduct) {
+    	if (dbProduct != null) {
+    		return;
+    	}
 
-    if (dbProduct != null) {
-      return;
-    }
+    	var p = new collections.userReviewModel({filmId: review._filmId, userReviewId: review._userReviewId, userName: review._userName, reviewText: review._review, score: review._score
+    	});
 
-    var p = new collections.userReviewModel({filmId: review._filmId, userReviewId: review._userReviewId, userName: review._userName, reviewText: review._review, score: review._score
-    });
-
-    p.save(function(error) {
-      if (error) {
-        console.log(error);
-      } else {
-        collections.userReviewModel.count({}, function(err, count) {
-         /*console.log("User Review count is " + count);*/
-       });
-      }
-    });
-  })
+    	p.save(function(error) {
+    		if (error) {
+    			console.log(error);
+    		} else {
+    			collections.userReviewModel.count({}, function(err, count) {
+    				if (err) throw err;
+    				console.log("User Review count is " + count);
+    			});
+    		}
+    	});
+    })
 }
 
 function  setupReviewEventListener() {
