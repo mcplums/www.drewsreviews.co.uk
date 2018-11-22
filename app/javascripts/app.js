@@ -94,12 +94,27 @@ function renderReviews() {
       let chunks = data.splice(0, 4);
       chunks.forEach(function(review)
       {
-        let node = $("<div id='review'>");
-        node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img style='width:150px' src=" + review.posterSource + "></a></div>");
-        node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><a hreh='asdf' style='color:#3E4655'>asdfasdfa</a></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
-        /*node.append("<a href='stfu'>Add User Review</a>");*/
-        /*node.append("<span id='reviewtext'>" + review.reviewText + "</span></div>")*/;
-        $("#reviews").append(node);
+        if ( review.userReviewCount > 1 )
+        {
+          let node = $("<div id='review'>");
+          node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img style='width:150px' src=" + review.posterSource + "></a></div>");
+          node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><span id='user-review-link'><sup><a href='userreviews.html?id=" + review.blockchainId +"'' style='color:#3E4655'>View " + review.userReviewCount + " User Reviews</a></sup></span></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
+          $("#reviews").append(node);
+        }
+        else if ( review.userReviewCount == 1 )
+        {
+          let node = $("<div id='review'>");
+          node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img style='width:150px' src=" + review.posterSource + "></a></div>");
+          node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><span id='user-review-link'><sup><a href='userreviews.html?id=" + review.blockchainId +"'' style='color:#3E4655'>View 1 User Review</a></sup></span></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
+          $("#reviews").append(node);
+        }
+        else
+        {
+          let node = $("<div id='review'>");
+          node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img style='width:150px' src=" + review.posterSource + "></a></div>");
+          node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><span id='user-review-link'><sup><a href='userreviews.html?id=" + review.blockchainId +"'' style='color:#3E4655'>Add User Review</a></sup></span></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
+          $("#reviews").append(node);
+        }
       });
 
     }

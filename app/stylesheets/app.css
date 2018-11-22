@@ -13,6 +13,13 @@
 
 /*//////////////*/
 
+#user-review-link a {
+  font-size: 9pt;
+  color: grey !important;
+  text-decoration: none;
+  font-variant: none;
+}
+
 #add-user-review {
   position:relative;
   width:525px;
