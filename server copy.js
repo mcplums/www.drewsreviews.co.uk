@@ -54,11 +54,29 @@ console.log("starting User Review Event Listener");
 
 function saveUserReview(review) {
 
+	//console.log("Starting saveUserReview");
+    //Get current userReviewCount
+    collections.ReviewModel.findOne(
+    	{ 'blockchainId': review._filmId.toNumber() }, 
+    	function(err, result) {
+    		if (err) throw err;
+    		console.log("Result of findOne:" + result);
+    		console.log("Original userReviewCount is" + result.userReviewCount);
+    		currentCount = result.userReviewCount;
+    		currentCount++;
+    	});
+
+    //I do NOT understand why the below is needed. It seems to randomly use the below to increment sometimes, and othertimes it uses the above currentCount++; within the loop to increment. It is not consistent. But it works if I have both. 
+    //currentCount++;
+
+    //Add current userReviewCountback to db
     collections.ReviewModel.update(
     	{ 'blockchainId': review._filmId.toNumber() }, 
-    	{ $inc: { "userReviewCount": 1 } }, 
+    	{ $set: { "userReviewCount": currentCount } }, 
     	function(err, res) {
     		if (err) throw err;
+    		console.log("Result of updateOne:" + res);
+    		console.log("Updated userReviewCount is" + currentCount);
     	});
 
     //Add actual userreview to thing

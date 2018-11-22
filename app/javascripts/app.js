@@ -227,7 +227,7 @@ function addUserReview(review) {
         gas: 4700000
       });
     }).then(function(f) {
-      alert("User review added. Refresh the page after the transaction is confirmed to see your review");
+      //alert("User review added. Refresh the page after the transaction is confirmed to see your review");
     });
   }
 
