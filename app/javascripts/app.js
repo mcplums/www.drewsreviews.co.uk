@@ -25,6 +25,8 @@ window.App = {
     DrewsReviews.setProvider(web3.currentProvider);
     console.log('STFU');
 
+    renderHeader();
+
     if ($("#user-reviews").length > 0) {
             //product page always has an id, this is how it gets access to it
             let filmId = new URLSearchParams(window.location.search).get('id');
@@ -133,6 +135,37 @@ function renderReviews() {
     });
   });
 }*/
+
+function renderHeader() {
+  $.ajax({
+    url: "http://localhost:3000/header",
+    type: 'get',
+    contentType: "application/json; charset=utf-8",
+    data: {  }
+  }).done(function(data) {
+    while(data.length > 0) {
+      let chunks = data.splice(0, 4);
+      chunks.forEach(function(review)
+      {
+    console.log(review);
+     let node = $("<span id='stfu'>");
+        node.append("<div id='poster'><img style='width:150px' src=" + data.userName + "></div>");
+        $("#recent-user-review").append(node);
+      });
+}
+});
+}
+
+function renderHeader2(id) {
+  $.ajax({
+    url: "http://localhost:3000/header2",
+    type: 'get',
+    contentType: "application/json; charset=utf-8",
+    data: { userReviewCount: id }
+  }).done(function(data) {
+    console.log("superimportant:",data);
+});
+}
 
 function renderSingleReview(id) {
   $.ajax({

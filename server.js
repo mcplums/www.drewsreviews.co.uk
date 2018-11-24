@@ -6,7 +6,7 @@ var DrewsReviews = contract(drewsreviews_artifacts);
 DrewsReviews.setProvider(provider);
 var express = require('express');
 var app = express();
-var currentCount =0;
+
 
 
 app.use(function(req, res, next) {
@@ -46,7 +46,7 @@ console.log("starting User Review Event Listener");
         console.log(err)
         return;
       }
-      console.log(result.args);
+      //console.log(result.args);
       saveUserReview(result.args);
     });
   });
@@ -65,7 +65,7 @@ function saveUserReview(review) {
     collections.userReviewModel.findOne({ 'userReviewId': review._userReviewId.toNumber() }, function (err, dbProduct) {
 
     	if (dbProduct != null) {
-    		console.log("Already in the database");
+    		//console.log("Already in the database");
     		return;
     	}
 
@@ -155,3 +155,39 @@ app.get('/userreviews', function(req, res) {
     res.send(items);
   });
 });
+
+app.get('/header', function(req, res) {
+	collections.userReviewModel.count( {} , function(err, count) {		
+      //res.send(count + "");
+      console.log("stfu",count);
+      collections.userReviewModel.findOne({ 'userReviewId': count }, function (err, dbProduct) {
+			//res.send(dbProduct);
+			console.log("second answer:",dbProduct);
+			res.send(dbProduct);
+		/*}, function(err){
+			return console.log(err);*/
+		});
+  }  );
+});
+
+/*app.get('/header2', function(req, res) {
+		console.log("pls",res);
+		collections.userReviewModel.findOne({ 'userReviewId': res }, function (err, dbProduct) {
+			//res.send(dbProduct);
+			console.log("second answer:",dbProduct);
+		}, function(err){
+			return console.log(err);
+		});
+});*/
+
+
+//BELOW IS BOLLOCKS
+/*app.get('/header', function(req, res) {
+
+	collections.userReviewModel.count().then(function(result){
+		console.log(result);
+		res.send(result);
+	}, function(err){
+		return console.log(err);
+	});
+});*/
