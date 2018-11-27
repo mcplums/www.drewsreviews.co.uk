@@ -11,6 +11,7 @@ var ReviewSchema = new Schema({
  score: Number,
  posterSource: String, 
  userReviewCount: Number,
+ deleted: Number,
 });
 
 var userReviewSchema = new Schema({

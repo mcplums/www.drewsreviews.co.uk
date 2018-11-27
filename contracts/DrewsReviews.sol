@@ -16,6 +16,7 @@ contract DrewsReviews {
 		uint reviewDate;
 		uint score;
 		string imageSource;
+		uint deleted;
 	}
 
 	struct userReview {
@@ -23,6 +24,7 @@ contract DrewsReviews {
 		string userName;
 		string review;
 		uint score;
+		//uint deleted;
 	}
 	
 constructor () public {
@@ -32,7 +34,7 @@ constructor () public {
 
 event newReview(uint _filmId, string _name, string _review, string _imageSource, uint _score);
 
-event editedReview(uint _filmId, string _name, string _review, string _imageSource, uint _score);
+event editedReview(uint _filmId, string _name, string _review, string _imageSource, uint _score, uint _deleted);
 
 event newUserReview(uint _filmId, uint _userReviewId, string _userName, string _review, uint _score);
 
@@ -40,18 +42,18 @@ function addReview(string _name, string _review, uint _reviewdate, uint _score, 
 	//assert(msg.sender == owner);
 
     reviewIndex += 1;
-    Review memory review = Review (_name, _review, _reviewdate, _score, _imageSource );
+    Review memory review = Review (_name, _review, _reviewdate, _score, _imageSource, 0 );
     reviewList[reviewIndex] = review;
     emit newReview(reviewIndex, _name, _review, _imageSource, _score);
 }
 
-function editReview(uint _filmId, string _name, string _review, uint _reviewdate, uint _score, string _imageSource) public {
+function editReview(uint _filmId, string _name, string _review, uint _reviewdate, uint _score, string _imageSource, uint _deleted) public {
 	//assert(msg.sender == owner);
     
-    Review memory review = Review (_name, _review, _reviewdate, _score, _imageSource );
+    Review memory review = Review (_name, _review, _reviewdate, _score, _imageSource, _deleted );
 
     reviewList[_filmId] = review;
-    emit editedReview(_filmId, _name, _review, _imageSource, _score);
+    emit editedReview(_filmId, _name, _review, _imageSource, _score, _deleted);
 }
 
 function addUserReview(uint _filmId, string _username, string _review, uint _score) public {
@@ -62,9 +64,9 @@ function addUserReview(uint _filmId, string _username, string _review, uint _sco
     emit newUserReview(_filmId, userReviewIndex, _username, _review, _score);
 }
 
-function getReview(uint _filmId) view public returns (string, string, uint, uint, string) {
+function getReview(uint _filmId) view public returns (string, string, uint, uint, string, uint) {
 	Review memory review = reviewList[_filmId];
-	return (review.name, review.review, review.reviewDate, review.score, review.imageSource);
+	return (review.name, review.review, review.reviewDate, review.score, review.imageSource, review.deleted);
 }
 
 function getUserReview(uint _userReviewId) view public returns (uint, string, string, uint) {

@@ -62,6 +62,7 @@ window.App = {
               decodedParams[v] = decodeURIComponent(decodeURI(params[v]));
             });
             event.preventDefault();
+            console.log(decodedParams);
             editReview(decodedParams);
           });
 
@@ -109,7 +110,10 @@ function renderReviews() {
     while(data.length > 0) {
       let chunks = data.splice(0, 4);
       chunks.forEach(function(review)
-      {
+      { 
+        console.log(review);
+        if (review.deleted == 0)
+        {
         if ( review.userReviewCount > 1 )
         {
           let node = $("<div id='review'>");
@@ -131,6 +135,7 @@ function renderReviews() {
           node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><span id='user-review-link'><sup><a href='userreviews.html?id=" + review.blockchainId +"'' style='color:#3E4655'>Add User Review</a></sup></span></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
           $("#reviews").append(node);
         }
+      }
       });
 
     }
@@ -264,7 +269,7 @@ function editReview(review) {
   try {
     var ts = Math.round((new Date()).getTime() / 1000);
     DrewsReviews.deployed().then(function(f) {
-      return f.editReview(review["id"], review["film-name"], review["review-text"], ts, review["film-score"], review["poster-source"], {
+      return f.editReview(review["id"], review["film-name"], review["review-text"], ts, review["film-score"], review["poster-source"], review["deleted"], {
         from: web3.eth.accounts[0],
         gas: 4700000
       });

@@ -112,7 +112,7 @@ function saveReview(review) {
     }
 
     var p = new collections.ReviewModel({name: review._name, blockchainId: review._filmId,
-      reviewText: review._review, score: review._score, posterSource: review._imageSource, userReviewCount: 0
+      reviewText: review._review, score: review._score, posterSource: review._imageSource, userReviewCount: 0, deleted: 0
     });
 
     //p.save is the magic here,the poduct as defined above is added to mongodb
@@ -161,7 +161,8 @@ function editReview(review) {
         'name':  review._name,
         'reviewText': review._review, 
         'score': review._score, 
-        'posterSource': review._imageSource 
+        'posterSource': review._imageSource ,
+        'deleted': review._deleted
         } 
       }, 
       function(err, res) {
