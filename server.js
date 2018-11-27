@@ -172,6 +172,45 @@ function editReview(review) {
   })
 }
 
+function  setupDeleteUserReviewEventListener() {
+  console.log("starting Delete User Review Event Listener");
+  var reviewEvent;
+  DrewsReviews.deployed().then(function(i) {
+    reviewEvent = i.editedUserReview({fromBlock: 0, toBlock: 'latest'})
+    reviewEvent.watch(function(err, result) {
+      if (err) {
+        console.log(err)
+        return;
+      }
+      //console.log(result.args);
+      deleteUserReview(result.args);
+    });
+  });
+}
+
+function deleteUserReview(review) {
+
+  console.log("Starting deleteUserReview");
+  //ProductModel is the scheme, as defined by product.js (which is required for this file, above) it searches the database for the id,it should return null
+  collections.userReviewModel.findOne({ 'blockchainId': review._filmId.toNumber() }, function (err, dbProduct) {
+    //this is a strange way of doing if else, you just put a return in the if, then you don't need to bother with the else
+    if (dbProduct == null) {
+      return;
+    }
+
+      collections.userReviewModel.update(
+      { 'userReviewId': review._userReviewId.toNumber() }, 
+      { $set: { 
+        'deleted': review._deleted
+        } 
+      }, 
+      function(err, res) {
+        if (err) throw err;
+      });
+
+  })
+}
+
 //This is the bit that allows the front end to call the database. It is largely copy and pasted from zastrin. 
 app.get('/reviews', function(req, res) {
 

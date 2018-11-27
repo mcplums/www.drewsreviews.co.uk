@@ -62,8 +62,23 @@ window.App = {
               decodedParams[v] = decodeURIComponent(decodeURI(params[v]));
             });
             event.preventDefault();
-            console.log(decodedParams);
+            //console.log(decodedParams);
             editReview(decodedParams);
+          });
+
+            $("#delete-user-review").submit(function(event) {
+            //Below gets the info that is submitted by the form, into the variable req
+            const req = $("#delete-user-review").serialize();
+            //below cleans it up, i dont understand the details but it gets it into a readable state
+            let params = JSON.parse('{"' + req.replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+            let decodedParams = {}
+            Object.keys(params).forEach(function(v) {
+              decodedParams[v] = decodeURIComponent(decodeURI(params[v]));
+            });
+            event.preventDefault();
+            //console.log(decodedParams);
+            deleteUserReview(decodedParams);
+            
           });
 
           $("#add-user-review").submit(function(event) {
@@ -270,6 +285,23 @@ function editReview(review) {
     var ts = Math.round((new Date()).getTime() / 1000);
     DrewsReviews.deployed().then(function(f) {
       return f.editReview(review["id"], review["film-name"], review["review-text"], ts, review["film-score"], review["poster-source"], review["deleted"], {
+        from: web3.eth.accounts[0],
+        gas: 4700000
+      });
+    }).then(function(f) {
+      alert("Review added");
+    });
+  }
+  catch (error) {
+    console.error(error);
+  }
+}
+
+function deleteUserReview(review) {
+  try {
+    var ts = Math.round((new Date()).getTime() / 1000);
+    DrewsReviews.deployed().then(function(f) {
+      return f.deleteUserReview(review["id"], 1, {
         from: web3.eth.accounts[0],
         gas: 4700000
       });

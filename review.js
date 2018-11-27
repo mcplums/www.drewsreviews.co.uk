@@ -20,6 +20,7 @@ var userReviewSchema = new Schema({
  userName: String,
  reviewText: String,
  score: Number,
+ deleted: Number,
 });
 
 var ReviewModel = mongoose.model('ReviewModel', ReviewSchema);
