@@ -161,33 +161,16 @@ app.get('/header', function(req, res) {
       //res.send(count + "");
       console.log("stfu",count);
       collections.userReviewModel.findOne({ 'userReviewId': count }, function (err, dbProduct) {
-			//res.send(dbProduct);
-			console.log("second answer:",dbProduct);
-			res.send(dbProduct);
-		/*}, function(err){
-			return console.log(err);*/
-		});
-  }  );
+
+       collections.ReviewModel.findOne({ 'blockchainId': dbProduct.filmId}, function(err, items) {
+
+        dbProduct.reviewText = items.name;
+        console.log("second answer:",dbProduct);
+
+        res.send(dbProduct);
+
+      }); 
+     });
+    });
 });
 
-/*app.get('/header2', function(req, res) {
-		console.log("pls",res);
-		collections.userReviewModel.findOne({ 'userReviewId': res }, function (err, dbProduct) {
-			//res.send(dbProduct);
-			console.log("second answer:",dbProduct);
-		}, function(err){
-			return console.log(err);
-		});
-});*/
-
-
-//BELOW IS BOLLOCKS
-/*app.get('/header', function(req, res) {
-
-	collections.userReviewModel.count().then(function(result){
-		console.log(result);
-		res.send(result);
-	}, function(err){
-		return console.log(err);
-	});
-});*/

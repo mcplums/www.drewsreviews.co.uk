@@ -142,29 +142,12 @@ function renderHeader() {
     type: 'get',
     contentType: "application/json; charset=utf-8",
     data: {  }
-  }).done(function(data) {
-    while(data.length > 0) {
-      let chunks = data.splice(0, 4);
-      chunks.forEach(function(review)
-      {
-    console.log(review);
-     let node = $("<span id='stfu'>");
-        node.append("<div id='poster'><img style='width:150px' src=" + data.userName + "></div>");
-        $("#recent-user-review").append(node);
-      });
-}
-});
-}
-
-function renderHeader2(id) {
-  $.ajax({
-    url: "http://localhost:3000/header2",
-    type: 'get',
-    contentType: "application/json; charset=utf-8",
-    data: { userReviewCount: id }
-  }).done(function(data) {
-    console.log("superimportant:",data);
-});
+  }).done(function(data, peen) {
+    console.log(data.userName);
+    let node = $("<span id='stfu'>");
+    node.append(data.userName + " reviewing <a href='userreviews.html?id=" + data.filmId + "'>" + data.reviewText + "</a>");
+    $("#recent-user-review").append(node);
+  });
 }
 
 function renderSingleReview(id) {
