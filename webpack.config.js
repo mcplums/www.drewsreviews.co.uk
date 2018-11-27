@@ -14,6 +14,7 @@ module.exports = {
       { from: './app/header.html', to: "header.html" },
       { from: './app/images/', to: "images/" },
       { from: './app/addreview.html', to: "addreview.html" },
+      { from: './app/editreview.html', to: "editreview.html" },
       { from: './app/userreviews.html', to: "userreviews.html" },
 
     ])

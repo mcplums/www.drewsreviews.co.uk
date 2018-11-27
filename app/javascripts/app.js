@@ -38,6 +38,7 @@ window.App = {
           }
 
 
+
           $("#add-review").submit(function(event) {
             //Below gets the info that is submitted by the form, into the variable req
             const req = $("#add-review").serialize();
@@ -49,6 +50,19 @@ window.App = {
             });
             event.preventDefault();
             addReview(decodedParams);
+          });
+
+            $("#edit-review").submit(function(event) {
+            //Below gets the info that is submitted by the form, into the variable req
+            const req = $("#edit-review").serialize();
+            //below cleans it up, i dont understand the details but it gets it into a readable state
+            let params = JSON.parse('{"' + req.replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+            let decodedParams = {}
+            Object.keys(params).forEach(function(v) {
+              decodedParams[v] = decodeURIComponent(decodeURI(params[v]));
+            });
+            event.preventDefault();
+            editReview(decodedParams);
           });
 
           $("#add-user-review").submit(function(event) {
@@ -161,13 +175,13 @@ function renderSingleReview(id) {
       let chunks = data.splice(0, 4);
       chunks.forEach(function(review)
       {
-      let node = $("<div id='review'>");
+        let node = $("<div id='review'>");
         node.append("<div id='poster'><img style='width:150px' src=" + review.posterSource + "></div>");
         node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
         $("#reviews").append(node);
-    });
-  }
-});
+      });
+    }
+  });
 }
 
 function renderUserReviews(id) {
@@ -181,28 +195,28 @@ function renderUserReviews(id) {
     while(data.length > 0) {
       let chunks = data.splice(0, 4);
       chunks.forEach(function(review)
+      {
+        if (review.filmId == id)
         {
-          if (review.filmId == id)
-          {
-            reviewfound=1;
-            let node = $("<div id='user-review'>");
-            node.append("Name: " + review.userName + ". Review: " + review.reviewText + "<img src='images/" + review.score + ".png'/>");
-            $("#user-reviews").append(node);
-          }
-          else {
-            console.log("A userview has been not printed");
-          }
-          
-        });
+          reviewfound=1;
+          let node = $("<div id='user-review'>");
+          node.append("Name: " + review.userName + ". Review: " + review.reviewText + "<img src='images/" + review.score + ".png'/>");
+          $("#user-reviews").append(node);
+        }
+        else {
+          console.log("A userview has been not printed");
+        }
 
-      }
-      if (reviewfound == 0) {
-            let node = $("<div id='user-review'>");
-            node.append("[no user reviews]");
-            $("#user-reviews").append(node);
-          }
-    });
-  }
+      });
+
+    }
+    if (reviewfound == 0) {
+      let node = $("<div id='user-review'>");
+      node.append("[no user reviews]");
+      $("#user-reviews").append(node);
+    }
+  });
+}
 
 
 //old version
@@ -241,8 +255,23 @@ function addReview(review) {
       alert("Review added");
     });
   }
+  catch (error) {
+    console.error(error);
+  }
+}
 
-
+function editReview(review) {
+  try {
+    var ts = Math.round((new Date()).getTime() / 1000);
+    DrewsReviews.deployed().then(function(f) {
+      return f.editReview(review["id"], review["film-name"], review["review-text"], ts, review["film-score"], review["poster-source"], {
+        from: web3.eth.accounts[0],
+        gas: 4700000
+      });
+    }).then(function(f) {
+      alert("Review added");
+    });
+  }
   catch (error) {
     console.error(error);
   }
