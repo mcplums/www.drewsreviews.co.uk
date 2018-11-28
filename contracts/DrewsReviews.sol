@@ -38,7 +38,7 @@ event editedReview(uint _filmId, string _name, string _review, string _imageSour
 
 event newUserReview(uint _filmId, uint _userReviewId, string _userName, string _review, uint _score);
 
-event editedUserReview(uint _filmId, uint _userReviewId, string _userName, string _review, uint _score, uint deleted);
+event editedUserReview(uint _filmId, uint _userReviewId, string _userName, string _review, uint _score, uint _deleted);
 
 function addReview(string _name, string _review, uint _reviewdate, uint _score, string _imageSource) public {
 	//assert(msg.sender == owner);

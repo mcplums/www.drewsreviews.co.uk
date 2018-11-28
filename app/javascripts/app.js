@@ -78,7 +78,7 @@ window.App = {
             event.preventDefault();
             //console.log(decodedParams);
             deleteUserReview(decodedParams);
-            
+
           });
 
           $("#add-user-review").submit(function(event) {
@@ -216,7 +216,7 @@ function renderUserReviews(id) {
       let chunks = data.splice(0, 4);
       chunks.forEach(function(review)
       {
-        if (review.filmId == id)
+        if ((review.filmId == id) && (review.deleted == 0))
         {
           reviewfound=1;
           let node = $("<div id='user-review'>");
@@ -301,7 +301,7 @@ function deleteUserReview(review) {
   try {
     var ts = Math.round((new Date()).getTime() / 1000);
     DrewsReviews.deployed().then(function(f) {
-      return f.deleteUserReview(review["id"], 1, {
+      return f.deleteUserReview(review["id"], {
         from: web3.eth.accounts[0],
         gas: 4700000
       });

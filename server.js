@@ -35,9 +35,10 @@ app.get('/', function(req, res) {
 setupReviewEventListener();
 setupUserReviewEventListener();
 setupEditReviewEventListener();
+setupDeleteUserReviewEventListener();
 
 function  setupUserReviewEventListener() {
-console.log("starting User Review Event Listener");
+//console.log("starting User Review Event Listener");
   var userReviewEvent;
   DrewsReviews.deployed().then(function(i) {
     userReviewEvent = i.newUserReview({fromBlock: 0, toBlock: 'latest'})
@@ -54,6 +55,8 @@ console.log("starting User Review Event Listener");
 
 function saveUserReview(review) {
 
+  console.log("saveUserReview is being called");
+
     collections.ReviewModel.update(
     	{ 'blockchainId': review._filmId.toNumber() }, 
     	{ $inc: { "userReviewCount": 1 } }, 
@@ -69,7 +72,7 @@ function saveUserReview(review) {
     		return;
     	}
 
-    	var p = new collections.userReviewModel({filmId: review._filmId, userReviewId: review._userReviewId, userName: review._userName, reviewText: review._review, score: review._score
+    	var p = new collections.userReviewModel({filmId: review._filmId, userReviewId: review._userReviewId, userName: review._userName, reviewText: review._review, score: review._score, deleted: 0
     	});
 
     	p.save(function(error) {
@@ -86,7 +89,7 @@ function saveUserReview(review) {
 }
 
 function  setupReviewEventListener() {
-	console.log("starting Review Event Listener");
+	//console.log("starting Review Event Listener");
 	var reviewEvent;
 	DrewsReviews.deployed().then(function(i) {
 		reviewEvent = i.newReview({fromBlock: 0, toBlock: 'latest'})
@@ -103,7 +106,7 @@ function  setupReviewEventListener() {
 
 function saveReview(review) {
 
-	console.log("Starting saveReview");
+	//console.log("Starting saveReview");
 	//ProductModel is the scheme, as defined by product.js (which is required for this file, above) it searches the database for the id,it should return null
   collections.ReviewModel.findOne({ 'blockchainId': review._filmId.toNumber() }, function (err, dbProduct) {
   	//this is a strange way of doing if else, you just put a return in the if, then you don't need to bother with the else
@@ -130,7 +133,7 @@ function saveReview(review) {
 }
 
 function  setupEditReviewEventListener() {
-  console.log("starting Edit Review Event Listener");
+  //console.log("starting Edit Review Event Listener");
   var reviewEvent;
   DrewsReviews.deployed().then(function(i) {
     reviewEvent = i.editedReview({fromBlock: 0, toBlock: 'latest'})
@@ -147,7 +150,7 @@ function  setupEditReviewEventListener() {
 
 function editReview(review) {
 
-  console.log("Starting editReview");
+  //console.log("Starting editReview");
   //ProductModel is the scheme, as defined by product.js (which is required for this file, above) it searches the database for the id,it should return null
   collections.ReviewModel.findOne({ 'blockchainId': review._filmId.toNumber() }, function (err, dbProduct) {
     //this is a strange way of doing if else, you just put a return in the if, then you don't need to bother with the else
@@ -173,7 +176,7 @@ function editReview(review) {
 }
 
 function  setupDeleteUserReviewEventListener() {
-  console.log("starting Delete User Review Event Listener");
+  //console.log("starting Delete User Review Event Listener");
   var reviewEvent;
   DrewsReviews.deployed().then(function(i) {
     reviewEvent = i.editedUserReview({fromBlock: 0, toBlock: 'latest'})
@@ -182,7 +185,7 @@ function  setupDeleteUserReviewEventListener() {
         console.log(err)
         return;
       }
-      //console.log(result.args);
+      //console.log("output:", result.args);
       deleteUserReview(result.args);
     });
   });
@@ -190,18 +193,27 @@ function  setupDeleteUserReviewEventListener() {
 
 function deleteUserReview(review) {
 
-  console.log("Starting deleteUserReview");
-  //ProductModel is the scheme, as defined by product.js (which is required for this file, above) it searches the database for the id,it should return null
-  collections.userReviewModel.findOne({ 'blockchainId': review._filmId.toNumber() }, function (err, dbProduct) {
+    collections.ReviewModel.update(
+      { 'blockchainId': review._filmId.toNumber() }, 
+      { $inc: { "userReviewCount": -1 } }, 
+      function(err, res) {
+        if (err) throw err;
+      });
+
+  collections.userReviewModel.findOne({ 'userReviewId': review._userReviewId.toNumber() }, function (err, dbProduct) {
     //this is a strange way of doing if else, you just put a return in the if, then you don't need to bother with the else
     if (dbProduct == null) {
+      return;
+    }
+
+    if (review._deleted == null) {
       return;
     }
 
       collections.userReviewModel.update(
       { 'userReviewId': review._userReviewId.toNumber() }, 
       { $set: { 
-        'deleted': review._deleted
+        'deleted': 1
         } 
       }, 
       function(err, res) {
@@ -240,7 +252,7 @@ app.get('/userreviews', function(req, res) {
 
 app.get('/header', function(req, res) {
 	collections.userReviewModel.count( {} , function(err, count) {		
-    console.log("count:", count);
+    //console.log("count:", count);
     if (count > 0 ) {
 
       collections.userReviewModel.findOne({ 'userReviewId': count }, function (err, dbProduct) {
@@ -250,7 +262,6 @@ app.get('/header', function(req, res) {
        collections.ReviewModel.findOne({ 'blockchainId': dbProduct.filmId}, function(err, items) {
         //console.log("second answer:",items);
         dbProduct.reviewText = items.name;
-
 
         res.send(dbProduct);
 
