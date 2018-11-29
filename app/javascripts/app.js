@@ -132,21 +132,21 @@ function renderReviews() {
         if ( review.userReviewCount > 1 )
         {
           let node = $("<div id='review'>");
-          node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img style='width:150px' src=" + review.posterSource + "></a></div>");
+          node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img style='width:150px' src='posters/" + review.posterSource + "'></a></div>");
           node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><span id='user-review-link'><sup><a href='userreviews.html?id=" + review.blockchainId +"'' style='color:#3E4655'>View " + review.userReviewCount + " User Reviews</a></sup></span></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
           $("#reviews").append(node);
         }
         else if ( review.userReviewCount == 1 )
         {
           let node = $("<div id='review'>");
-          node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img style='width:150px' src=" + review.posterSource + "></a></div>");
+          node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img style='width:150px' src='posters/" + review.posterSource + "'></a></div>");
           node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><span id='user-review-link'><sup><a href='userreviews.html?id=" + review.blockchainId +"'' style='color:#3E4655'>View 1 User Review</a></sup></span></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
           $("#reviews").append(node);
         }
         else
         {
           let node = $("<div id='review'>");
-          node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img style='width:150px' src=" + review.posterSource + "></a></div>");
+          node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img id='posterimage' style='width:150px' src='posters/" + review.posterSource + "'></a></div>");
           node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><span id='user-review-link'><sup><a href='userreviews.html?id=" + review.blockchainId +"'' style='color:#3E4655'>Add User Review</a></sup></span></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
           $("#reviews").append(node);
         }
@@ -196,7 +196,7 @@ function renderSingleReview(id) {
       chunks.forEach(function(review)
       {
         let node = $("<div id='review'>");
-        node.append("<div id='poster'><img style='width:150px' src=" + review.posterSource + "></div>");
+        node.append("<div id='poster'><img style='width:150px' src=posters/" + review.posterSource + "></div>");
         node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
         $("#reviews").append(node);
       });

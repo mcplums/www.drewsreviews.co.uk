@@ -231,8 +231,7 @@ app.get('/reviews', function(req, res) {
   query['blockchainId'] = {$eq: req.query.blockchainId};
  }
 
-  collections.ReviewModel.find(query, null, {sort: 'blockchainId'}, function(err, items) {
-    /*console.log(items.length);*/
+ collections.ReviewModel.find({}, null, {sort: {blockchainId: -1}}, function(err, items) {
     res.send(items);
   });
 });
