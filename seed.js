@@ -5,7 +5,7 @@ DrewsReviews.deployed().then(function(f) {f.addReview('The Matrix', 'This film i
 
 DrewsReviews.deployed().then(function(f) {f.addReview('Lord of the Rings', 'The greatest film ever made. The best possible closure to the greatest trilogy of all time. Contains both the greatest scene and piece of music, of any film, at the same time- I\'m talking of course about <a href="/images/beacons.jpg">The Lighting of the Beacons</a>', 11111111, 40, 'Lord_of_the_Rings_-_The_Return_of_the_King.jpg').then(function(f) {console.log(f)})});
 
-DrewsReviews.deployed().then(function(f) {f.addReview('Tron Legacy', 'No film has exceeded my expectations as much as this. The plot was average, but the visuals and (especially) the music were unbelievably good. Never have my two favourite music genres (EDM and movie scores) come together so well, before or since. It is surely one of the great injusticies of our age that it isn\'t getting a sequel.', 11111111, 40, 'Tron_Legacy_poster.jpg').then(function(f) {console.log(f)})});
+/*DrewsReviews.deployed().then(function(f) {f.addReview('Tron Legacy', 'No film has exceeded my expectations as much as this. The plot was average, but the visuals and (especially) the music were unbelievably good. Never have my two favourite music genres (EDM and movie scores) come together so well, before or since. It is surely one of the great injusticies of our age that it isn\'t getting a sequel.', 11111111, 40, 'Tron_Legacy_poster.jpg').then(function(f) {console.log(f)})});
 
 DrewsReviews.deployed().then(function(f) {f.addReview('300', 'Cool af. Ten years on (!), I\'ve still yet to see a film with fight scenes this good.', 11111111, 40, '300poster.jpg').then(function(f) {console.log(f)})});
 
@@ -37,7 +37,7 @@ DrewsReviews.deployed().then(function(f) {f.addReview('Jurassic World: Fallen Ki
 DrewsReviews.deployed().then(function(f) {f.addReview('Overlord', 'Unbelievable. Essentially Wolfeinstein the Movie, but amazing, unlike other video game films. The first half was a war film of the highest quality [much like Faramir]- the opening scenes in the plane were tense af. The second half- extremely creepy, almost a horror. The whole thing came together excellently.', 11111111, 40, 'Overlord2018Poster.jpg').then(function(f) {console.log(f)})});
 
 
-DrewsReviews.deployed().then(function(f) {f.addReview('The Girl in the Spiders Web', 'There was a scene where the hero hacked into the car in front and deployed their airbags, on a phone, while driving. Who are those people who just don\'t care, and can sit through that and not want to throw their popcorn/friend at the screen?', 11111111, 25, 'The_Girl_in_the_Spiders_Web_poster.png').then(function(f) {console.log(f)})});
+DrewsReviews.deployed().then(function(f) {f.addReview('The Girl in the Spiders Web', 'There was a scene where the hero hacked into the car in front and deployed their airbags, on a phone, while driving. Who are those people who just don\'t care, and can sit through that and not want to throw their popcorn/friend at the screen?', 11111111, 25, 'The_Girl_in_the_Spiders_Web_poster.png').then(function(f) {console.log(f)})});*/
 
 
 

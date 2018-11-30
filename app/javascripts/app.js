@@ -98,23 +98,25 @@ window.App = {
 
 //below is the old version where it reads straight from the blockchain and not mongo
 /*function renderReviews() {
+  console.log("hello");
   DrewsReviews.deployed().then(function(f) {
     f.reviewIndex.call().then(function(p) {
       var count;
+      console.log(count);
       count = p;
       for (var i = 1; i <= count; i++) {
         f.getReview.call(i).then(function(q)
         {
           let node = $("<div id='review'>");
-          node.append("<div id='poster'><img style='width:150px' src=" + q[4] + "></div>");
+          node.append("<div id='poster'><img style='width:150px' src=posters/" + q[4] + "></div>");
           node.append("<div id='rightside'><span id='title'>" + q[0] + "<img src='images/" + q[3].toNumber() + ".png'/></span><span id='reviewtext'>" + q[1] + "</span></div>");
           $("#reviews").append(node);
         });
       }
     });
   });
-}*/
-
+}
+*/
 function renderReviews() {
   $.ajax({
     url: "http://localhost:3000/reviews",
