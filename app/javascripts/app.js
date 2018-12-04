@@ -282,9 +282,11 @@ function addReview(review) {
     DrewsReviews.deployed().then(function(f) {
       return f.addReview(review["film-name"], review["review-text"], ts, review["film-score"], review["poster-source"], {
         from: web3.eth.accounts[0],
+        //from: '0x1594F9007aAed421E56c240Eca35ABFD61dF59CC',
         gas: 4700000
       });
     }).then(function(f) {
+      console.log("address:", web3.eth.accounts[0]);
       alert("Review added");
     });
   }
