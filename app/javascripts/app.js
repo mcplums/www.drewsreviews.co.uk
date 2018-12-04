@@ -15,6 +15,7 @@ import DrewsReviewsartifacts from '../../build/contracts/DrewsReviews.json'
 var DrewsReviews = contract(DrewsReviewsartifacts);
 
 var reader;
+var ignoremongo = 1;
 
 window.App = {
   start: function() {
@@ -25,7 +26,9 @@ window.App = {
     DrewsReviews.setProvider(web3.currentProvider);
     console.log('STFU');
 
-    renderHeader();
+    //renderHeader();
+
+    //renderReviews();
 
     if ($("#user-reviews").length > 0) {
             //product page always has an id, this is how it gets access to it
@@ -34,7 +37,14 @@ window.App = {
             renderSingleReview(filmId);
             renderUserReviews(filmId);
           } else {
-            renderReviews();
+            if (ignoremongo == 1)
+            {
+            renderReviewsLegacy();
+            }
+            else
+            {
+            renderReviewsMongo();
+            }
           }
 
 
@@ -97,7 +107,7 @@ window.App = {
       };
 
 //below is the old version where it reads straight from the blockchain and not mongo
-/*function renderReviews() {
+function renderReviewsLegacy() {
   console.log("hello");
   DrewsReviews.deployed().then(function(f) {
     f.reviewIndex.call().then(function(p) {
@@ -116,8 +126,8 @@ window.App = {
     });
   });
 }
-*/
-function renderReviews() {
+
+function renderReviewsMongo() {
   $.ajax({
     url: "http://localhost:3000/reviews",
     type: 'get',
@@ -267,6 +277,7 @@ function renderUserReviews(id) {
 
 function addReview(review) {
   try {
+    console.log("peen");
     var ts = Math.round((new Date()).getTime() / 1000);
     DrewsReviews.deployed().then(function(f) {
       return f.addReview(review["film-name"], review["review-text"], ts, review["film-score"], review["poster-source"], {
