@@ -12,6 +12,8 @@ const ipfs = ipfsAPI({host: '127.0.0.1', port: '5001', protocol: 'http'});
 import DrewsReviewsartifacts from '../../build/contracts/DrewsReviews.json'
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
+
+//anothertest
 var DrewsReviews = contract(DrewsReviewsartifacts);
 
 var reader;
