@@ -17,12 +17,28 @@ import DrewsReviewsartifacts from '../../build/contracts/DrewsReviews.json'
 var DrewsReviews = contract(DrewsReviewsartifacts);
 
 var reader;
-var ignoremongo = 1;
+var mongoReviewsUrl;
+var mongoUserReviewsUrl;
+var mongoHeaderUrl;
+var ignoreMongo = 0;
+var dev = 0;
+
+if (dev == 1)
+{
+   mongoReviewsUrl = "http://localhost:3000/reviews";
+   mongoUserReviewsUrl = "http://localhost:3000/userreviews";
+   mongoHeaderUrl = "http://localhost:3000/header";
+}
+else
+{
+  mongoReviewsUrl = "http://www.drewsreviews.co.uk:3000/reviews";
+  mongoUserReviewsUrl = "http://www.drewsreviews.co.uk:3000/userreviews";
+  mongoHeaderUrl = "http://www.drewsreviews.co.uk:3000/header";
+}
 
 window.App = {
   start: function() {
     var self = this;
-
 
     // Bootstrap the MetaCoin abstraction for Use.
     DrewsReviews.setProvider(web3.currentProvider);
@@ -39,7 +55,7 @@ window.App = {
             renderSingleReview(filmId);
             renderUserReviews(filmId);
           } else {
-            if (ignoremongo == 1)
+            if (ignoreMongo == 1)
             {
             renderReviewsLegacy();
             }
@@ -131,7 +147,7 @@ function renderReviewsLegacy() {
 
 function renderReviewsMongo() {
   $.ajax({
-    url: "http://localhost:3000/reviews",
+    url: mongoReviewsUrl,
     type: 'get',
     contentType: "application/json; charset=utf-8",
     data: {}
@@ -169,6 +185,20 @@ function renderReviewsMongo() {
 
     }
   });
+  //do old version and add to console
+    DrewsReviews.deployed().then(function(f) {
+    f.reviewIndex.call().then(function(p) {
+      var count;
+      console.log(count);
+      count = p;
+      for (var i = 1; i <= count; i++) {
+        f.getReview.call(i).then(function(q)
+        {
+          console.log(q);
+        });
+      }
+    });
+  });
 }
 
 //old version
@@ -186,7 +216,7 @@ function renderReviewsMongo() {
 
 function renderHeader() {
   $.ajax({
-    url: "http://localhost:3000/header",
+    url: mongoHeaderUrl,
     type: 'get',
     contentType: "application/json; charset=utf-8",
     data: {  }
@@ -200,7 +230,7 @@ function renderHeader() {
 
 function renderSingleReview(id) {
   $.ajax({
-    url: "http://localhost:3000/reviews",
+    url: mongoReviewsUrl,
     type: 'get',
     contentType: "application/json; charset=utf-8",
     data: {blockchainId: id}
@@ -221,7 +251,7 @@ function renderSingleReview(id) {
 function renderUserReviews(id) {
   var reviewfound=0;
   $.ajax({
-    url: "http://localhost:3000/userreviews",
+    url: mongoUserReviewsUrl,
     type: 'get',
     contentType: "application/json; charset=utf-8",
     data: {blockchainId: id}
