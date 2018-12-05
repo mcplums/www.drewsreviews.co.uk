@@ -15,7 +15,7 @@ import DrewsReviewsartifacts from '../../build/contracts/DrewsReviews.json'
 var DrewsReviews = contract(DrewsReviewsartifacts);
 
 var reader;
-
+//test
 window.App = {
   start: function() {
     var self = this;
