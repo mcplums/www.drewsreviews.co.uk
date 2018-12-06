@@ -48,9 +48,7 @@ window.App = {
     DrewsReviews.setProvider(web3.currentProvider);
     console.log('STFU');
 
-    //renderHeader();
-
-    //renderReviews();
+    renderHeader();
 
     if ($("#user-reviews").length > 0) {
             //product page always has an id, this is how it gets access to it
@@ -340,7 +338,7 @@ function editReview(review) {
         gas: 4700000
       });
     }).then(function(f) {
-      alert("Review added");
+      alert("Review edited");
     });
   }
   catch (error) {
@@ -357,7 +355,7 @@ function deleteUserReview(review) {
         gas: 4700000
       });
     }).then(function(f) {
-      alert("Review added");
+      alert("Review deleted");
     });
   }
   catch (error) {
@@ -367,6 +365,7 @@ function deleteUserReview(review) {
 
 function addUserReview(review) {
   try {
+    alert("Clicking OK should launch metamask. Refresh the page after your transaction is confirmed to see your review");
     var ts = Math.round((new Date()).getTime() / 1000);
     let filmId = new URLSearchParams(window.location.search).get('id');
     DrewsReviews.deployed().then(function(f) {
@@ -375,7 +374,7 @@ function addUserReview(review) {
         gas: 4700000
       });
     }).then(function(f) {
-      //alert("User review added. Refresh the page after the transaction is confirmed to see your review");
+      
     });
   }
 
