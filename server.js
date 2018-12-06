@@ -238,6 +238,19 @@ app.get('/reviews', function(req, res) {
   });
 });
 
+app.get('/singlereview', function(req, res) {
+
+ var query = {};
+ if (req.query.blockchainId !== undefined) {
+  query['blockchainId'] = {$eq: req.query.blockchainId};
+ }
+
+  collections.ReviewModel.find(query, null, {sort: 'blockchainId'}, function(err, items) {
+    /*console.log(items.length);*/
+    res.send(items);
+  });
+});
+
 app.get('/userreviews', function(req, res) {
 
  var query = {};

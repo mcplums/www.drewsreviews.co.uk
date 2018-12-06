@@ -20,6 +20,7 @@ var reader;
 var mongoReviewsUrl;
 var mongoUserReviewsUrl;
 var mongoHeaderUrl;
+var mongoSingleReviewrUrl;
 var ignoreMongo = 0;
 var dev = 0;
 
@@ -28,12 +29,15 @@ if (dev == 1)
    mongoReviewsUrl = "http://localhost:3000/reviews";
    mongoUserReviewsUrl = "http://localhost:3000/userreviews";
    mongoHeaderUrl = "http://localhost:3000/header";
+   mongoSingleReviewrUrl = "http://localhost:3000/singlereview";
 }
 else
 {
   mongoReviewsUrl = "http://www.drewsreviews.co.uk:3000/reviews";
   mongoUserReviewsUrl = "http://www.drewsreviews.co.uk:3000/userreviews";
   mongoHeaderUrl = "http://www.drewsreviews.co.uk:3000/header";
+  mongoSingleReviewrUrl = "http://www.drewsreviews.co.uk:3000/singlereview";
+
 }
 
 window.App = {
@@ -230,7 +234,7 @@ function renderHeader() {
 
 function renderSingleReview(id) {
   $.ajax({
-    url: mongoReviewsUrl,
+    url: mongoSingleReviewrUrl,
     type: 'get',
     contentType: "application/json; charset=utf-8",
     data: {blockchainId: id}
