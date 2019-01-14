@@ -179,7 +179,7 @@ function renderReviewsMongo() {
         {
           let node = $("<div id='review'>");
           node.append("<div id='poster'><a href='userreviews.html?id=" + review.blockchainId + "''><img id='posterimage' style='width:150px' src='posters/" + review.posterSource + "'></a></div>");
-          node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><span id='user-review-link'><sup><a href='userreviews.html?id=" + review.blockchainId +"'' style='color:#3E4655'>Add User Review</a></sup></span></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
+          node.append("<div id='rightside'><span id='title'>" + review.name + "<img src='images/" + review.score + ".png'/><span id='user-review-link'><sup><a href='userreviews.html?id=" + review.blockchainId +"'' style='color:#3E4655'>Add Your Own Review</a></sup></span></span><span id='reviewtext'>" + review.reviewText + "</span></div>");
           $("#reviews").append(node);
         }
       }
@@ -371,7 +371,7 @@ function addUserReview(review) {
     DrewsReviews.deployed().then(function(f) {
       return f.addUserReview(filmId,review["user-name"], review["review-text"], review["film-score"], {
         from: web3.eth.accounts[0],
-        gas: 4700000
+        gas: 500000
       });
     }).then(function(f) {
       

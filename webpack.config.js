@@ -1,7 +1,10 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
+/*  target: 'node',
+    externals: [nodeExternals()],*/
   entry: './app/javascripts/app.js',
   output: {
     path: path.resolve(__dirname, 'build'),

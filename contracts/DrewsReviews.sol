@@ -59,7 +59,7 @@ function editReview(uint _filmId, string _name, string _review, uint _reviewdate
 }
 
 function deleteUserReview(uint _userReviewId) public {
-	sassert(msg.sender == owner);
+	assert(msg.sender == owner);
 
 	userReview memory _originalReview = userReviewList[_userReviewId];
     

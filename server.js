@@ -49,7 +49,7 @@ function  setupUserReviewEventListener() {
         console.log(err)
         return;
       }
-      //console.log(result.args);
+      console.log(result.args);
       saveUserReview(result.args);
     });
   });
@@ -268,7 +268,7 @@ app.get('/header', function(req, res) {
 	collections.userReviewModel.count( {} , function(err, count) {		
     //console.log("count:", count);
     if (count > 0 ) {
-
+    		 console.log('A page is being loaded');
       collections.userReviewModel.findOne({ 'userReviewId': count }, function (err, dbProduct) {
         //Below is the hack where I look into the other database for the film name and add it to reviewText variable and pass it to the front end. 
 

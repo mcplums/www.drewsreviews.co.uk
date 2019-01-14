@@ -41,7 +41,8 @@
     "web3": "^0.20.0",
     "webpack": "^2.2.1",
     "webpack-bundle-analyzer": "^3.0.3",
-    "webpack-dev-server": "^2.3.0"
+    "webpack-dev-server": "^2.3.0",
+    "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
     "truffle-hdwallet-provider": "0.0.6"
