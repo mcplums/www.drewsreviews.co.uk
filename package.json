@@ -33,7 +33,7 @@
     "json-loader": "^0.5.4",
     "macaddress": ">=0.2.9",
     "mime": ">=1.4.1",
-    "mongoose": "4.11.7",
+    "mongoose": "4.13.21",
     "nodemon": "^1.11.0",
     "style-loader": "^0.13.1",
     "truffle-contract": "^1.1.11",
